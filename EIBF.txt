@@ -1,0 +1,37 @@
+     View: view_eibf_customers
+         Create View: CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_eibf_customers` AS select 
+         `c`.`customer_id` AS `customer_id`,
+         `c`.`customer_number` AS `customer_number`,
+         `c`.`title` AS `title`,
+         `c`.`firstname` AS `firstname`,
+         `c`.`surname` AS `surname`,
+         `c`.`company` AS `company`,
+         `c`.`street1` AS `street1`,
+         `c`.`street2` AS `street2`,
+         `c`.`street3` AS `street3`,
+         `c`.`city` AS `city`,
+         `c`.`county` AS `county`,
+         `c`.`country` AS `country`,
+         `c`.`post_code` AS `post_code`,
+         `cd`.`day_phone` AS `day_phone`,
+         `cd`.`eve_phone` AS `eve_phone`,
+         `cd`.`mobile` AS `mobile`,
+         `cd`.`fax` AS `fax`,
+         `cd`.`email` AS `email`,
+         `cd`.`alt_street1` AS `alt_street1`,
+         `cd`.`alt_street2` AS `alt_street2`,
+         `cd`.`alt_street3` AS `alt_street3`,
+         `cd`.`alt_city` AS `alt_city`,
+         `cd`.`alt_county` AS `alt_county`,
+         `cd`.`alt_country` AS `alt_country`,
+         `cd`.`alt_post_code` AS `alt_post_code`,
+         `c`.`notes` AS `notes`,
+
+         group_concat(`cf`.`title` order by `cf`.`field_id` ASC separator '|') AS `customer_field_titles`,
+
+         group_concat(`cfe`.`value` order by `cfe`.`field_id_fk` ASC separator '|') AS `customer_field_values`,
+         
+         `c`.`date_created` AS `created_at`,
+         `c`.`date_updated` AS `updated_at` from (((`customer` `c` join `customer_detail` `cd` on(`c`.`customer_id` = `cd`.`customer_id_fk`)) left join `customer_field_entry` `cfe` on(`cfe`.`customer_id_fk` = `c`.`customer_id`)) left join `customer_field` `cf` on(`cfe`.`field_id_fk` = `cf`.`field_id`)) group by `c`.`customer_id`
+character_set_client: utf8
+collation_connection: utf8_general_ci
