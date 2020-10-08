@@ -25,6 +25,8 @@
          `cd`.`alt_county` AS `alt_county`,
          `cd`.`alt_country` AS `alt_country`,
          `cd`.`alt_post_code` AS `alt_post_code`,
+        `cd`.`access_requirement` AS `access_requirement`,
+
          `c`.`notes` AS `notes`,
 
          group_concat(`cf`.`title` order by `cf`.`field_id` ASC separator '|') AS `customer_field_titles`,
